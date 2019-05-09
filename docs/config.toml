@@ -1,0 +1,33 @@
+baseURL = "https://tamada.github.io/uniq2"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "uniq2"
+theme = "cayman-hugo-theme"
+enableEmoji = true
+googleAnalytics = "UA-62401730-7"
+
+pygmentsCodefences = true
+pygmentsStyle = "pygments"
+
+[params]
+    project_name = "uniq2"
+    project_tagline = "Eliminates duplicate lines"
+    dateFormat = "2006-01-02"
+
+    footer = "[![GitHub](https://img.shields.io/badge/GitHub-tamada/uniq2-blueviolet.svg?logo=github)](https://github.com/tamada/uniq2) Made with [Hugo](https://gohugo.io/). Theme by [Cayman](https://github.com/zwbetz-gh/cayman-hugo-theme). Deployed to [GitHub Pages](https://pages.github.com/)."
+
+    katex = true
+
+[menu]
+    [[menu.nav]]
+        name = "Home"
+        url = "/"
+        weight = 1
+    [[menu.nav]]
+        name = "Utilities"
+        url = "/utils/"
+        weight = 2
+    [[menu.nav]]
+        name = "About"
+        url = "/about/"
+        weight = 3

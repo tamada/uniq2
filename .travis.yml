@@ -1,0 +1,12 @@
+language: go
+
+go:
+- '1.3'
+
+env:
+  global:
+    secure: b+I7yx6AzH14T5LoBorRh/rIIBxNIm39S5hH8Pb7d3OXMPA56tndPWYeGfZ33TQnWJXDkE/UysEqx3d7Kz5eqBoF/rQQ+44AfbjXjYecaszmRxaswG7Mxt3/hCGVnYk74Z3e8SSF0E97cstCS8SskWtnarYbCJOYp83WVZaMFh0zBw2YKASl5SRSb4gTfaltfA43v8rMKHRbU2dx+dSsRtX+0adR2umHV6pIMV1xzuTV0Kr5dni8/y4uivKcHXCbdr+yP++QB7kvm9rtN+u/2FSmO3oSnvlIBMsK8A10qtZBY+SHnYV6+0DxnaQWQhXLiWDhD9yjQPOwGgAqo95WW6ZOmGUQr3vtFTNiKFTWeHYI9JP31sEUh1kHkpK4Ff2wABsQlDlkabTuqAYGfvzEYMB5gvSkceiUyQGOv1BQhbHK4Cj3lXFEkeeR6S4H/eZdBEN7hrngH79G33F8JAMs94FuqWcSpkNbcLgZ5PsWD3KJIPCdTtUi+q9yQl2w2aY1HDFw7eGKNiSc9x73GoCpZIF5nQCTbotrX/WHs+G/yPUnATEb16fEe0azErfqOovWGQP3y1Bcj9Iu8BHEO3ZIfbBLnOT5fMKptd3FX8kHEY99Mc8zKecVnowsdagUedK69pfAim+8nNFGWfEPZKNnY5w+vptzLm3NCcI5EupIRB8=
+
+script:
+    - make test build
+    - $GOPATH/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
