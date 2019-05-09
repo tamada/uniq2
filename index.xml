@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>uniq2</title>
+    <link>https://tamada.github.io/uniq2/</link>
+    <description>Recent content on uniq2</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://tamada.github.io/uniq2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About the Project</title>
+      <link>https://tamada.github.io/uniq2/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tamada.github.io/uniq2/about/</guid>
+      <description> License Do What The F*ck You Want To Public License
+
+Authors  Haruaki Tamada  </description>
+    </item>
+    
+    <item>
+      <title>Utilities</title>
+      <link>https://tamada.github.io/uniq2/utils/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://tamada.github.io/uniq2/utils/</guid>
+      <description> Demo $ cat -n file line1 line1 line3 line1 $ uniq file line1 line3 line1 $ uniq2 file line1 line3  Delete duplicate entries in PATH export PATH=$(echo $PATH | tr : &#39;\n&#39; | uniq2 | paste -s -d : -)  </description>
+    </item>
+    
+  </channel>
+</rss>
