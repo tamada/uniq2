@@ -19,7 +19,13 @@ When deleting not continuous duplicate lines, we use `sort` command together, in
 
 We want to delete not continuous duplicated lines with remaining the order.
 
+## Install
 
+Simply type the following command.
+
+```sh
+$ go get github.com/tamada/uniq2
+```
 
 ## License
 
