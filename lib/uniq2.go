@@ -2,6 +2,7 @@ package lib
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -26,25 +27,9 @@ type Arguments struct {
 	Output  io.Writer
 }
 
-/*
-UniqueLine shows the lines of unique.
-*/
-type UniqueLine struct {
-	count int
+type entry struct {
 	line  string
-}
-
-/*
-DeleteLine shows the lines of deletion.
-*/
-type DeleteLine UniqueLine
-
-/*
-Context represents a targets.
-*/
-type Context struct {
-	uniques []UniqueLine
-	deletes []DeleteLine
+	count map[bool]int
 }
 
 /*
@@ -71,14 +56,23 @@ func (args *Arguments) Perform() error {
 	return args.runUnique(scanner, writer)
 }
 
+func isPrint(uniqFlag bool, deleteLineFlag bool) bool {
+	return !uniqFlag && !deleteLineFlag ||
+		uniqFlag && deleteLineFlag
+}
+
 func (args *Arguments) runUnique(scanner *bufio.Scanner, writer *bufio.Writer) error {
 	var results = []string{}
 	for scanner.Scan() {
 		var line = scanner.Text()
-		if flag, lineToDB := args.foundLine(line, results); !flag {
+		var uniqFlag, lineToDB = args.isUniqLine(line, results)
+		fmt.Printf("line: %s, uniq: %v, deletes: %v\n", line, uniqFlag, args.Options.DeleteLines)
+		if !uniqFlag {
+			results = append(results, lineToDB)
+		}
+		if isPrint(uniqFlag, args.Options.DeleteLines) {
 			writer.WriteString(line)
 			writer.WriteString("\n")
-			results = append(results, lineToDB)
 		}
 	}
 	writer.Flush()
@@ -105,7 +99,7 @@ func (opts *Options) isFoundLineInDB(line string, list []string) bool {
 	return false
 }
 
-func (args *Arguments) foundLine(line string, list []string) (flag bool, lineToDB string) {
+func (args *Arguments) isUniqLine(line string, list []string) (flag bool, lineToDB string) {
 	lineToDB = line
 	if args.Options.IgnoreCase {
 		lineToDB = strings.ToLower(line)

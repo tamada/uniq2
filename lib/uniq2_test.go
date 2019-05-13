@@ -42,6 +42,10 @@ func TestPerform(t *testing.T) {
 		{&Options{Adjacent: true}, "../testdata/test1.txt", "a1+a2+a3+a4+a1+A1"},
 		{&Options{IgnoreCase: true}, "../testdata/test1.txt", "a1+a2+a3+a4"},
 		{&Options{Adjacent: true, IgnoreCase: true}, "../testdata/test1.txt", "a1+a2+a3+a4+a1"},
+		{&Options{DeleteLines: true}, "../testdata/test1.txt", "a1+a2+a1"},
+		{&Options{Adjacent: true, DeleteLines: true}, "../testdata/test1.txt", "a1+a2"},
+		{&Options{IgnoreCase: true, DeleteLines: true}, "../testdata/test1.txt", "a1+a2+a1+A1"},
+		{&Options{Adjacent: true, IgnoreCase: true, DeleteLines: true}, "../testdata/test1.txt", "a1+a2+A1"},
 	}
 
 	for _, td := range testdata {
