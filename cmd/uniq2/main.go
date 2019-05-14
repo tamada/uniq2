@@ -61,57 +61,15 @@ func constructApp() *cli.App {
 
 func parseOptions(c *cli.Context) *lib.Options {
 	return &lib.Options{
-		c.Bool("adjacent"),
-		c.Bool("show-counts"),
-		c.Bool("delete-lines"),
-		c.Bool("ignore-case"),
+		Adjacent:    c.Bool("adjacent"),
+		ShowCounts:  c.Bool("show-counts"),
+		DeleteLines: c.Bool("delete-lines"),
+		IgnoreCase:  c.Bool("ignore-case"),
 	}
-}
-
-func parseCliArguments(args []string) (*os.File, *os.File, error) {
-	switch len(args) {
-	case 0:
-		return os.Stdin, os.Stdout, nil
-	case 1:
-		var input, err = createInput(args[0])
-		return input, os.Stdout, err
-	case 2:
-		var input, output *os.File
-		var err error
-		input, err = createInput(args[0])
-		if err != nil {
-			output, err = createOutput(args[1])
-		}
-		return input, output, err
-	}
-	return nil, nil, fmt.Errorf("too many arguments: %v", args)
-}
-
-func constructArguments(opts *lib.Options, args []string) (*lib.Arguments, error) {
-	var arguments = lib.Arguments{Options: opts}
-	var input, output, err = parseCliArguments(args)
-	arguments.Input = input
-	arguments.Output = output
-	return &arguments, err
-}
-
-func createOutput(output string) (*os.File, error) {
-	if output == "-" {
-		return os.Stdout, nil
-	}
-	return os.OpenFile(output, os.O_CREATE|os.O_WRONLY, 0644)
-}
-
-func createInput(input string) (*os.File, error) {
-	if input == "-" {
-		return os.Stdin, nil
-	}
-	return os.Open(input)
 }
 
 func perform(args *lib.Arguments) error {
-	defer args.Input.Close()
-	defer args.Output.Close()
+	defer args.Close()
 	return args.Perform()
 }
 
@@ -121,7 +79,7 @@ func action(app *cli.App, c *cli.Context) error {
 		printHelp(app)
 		return nil
 	}
-	var args, err = constructArguments(options, c.Args())
+	var args, err = lib.NewArguments(options, c.Args())
 	if err != nil {
 		return err
 	}

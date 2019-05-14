@@ -47,6 +47,50 @@ func (args *Arguments) Close() {
 }
 
 /*
+NewArguments construct an instance of Arguments with the given parameters.
+*/
+func NewArguments(opts *Options, args []string) (*Arguments, error) {
+	var arguments = Arguments{Options: opts}
+	var input, output, err = parseCliArguments(args)
+	arguments.Input = input
+	arguments.Output = output
+	return &arguments, err
+}
+
+func parseCliArguments(args []string) (*os.File, *os.File, error) {
+	switch len(args) {
+	case 0:
+		return os.Stdin, os.Stdout, nil
+	case 1:
+		var input, err = createInput(args[0])
+		return input, os.Stdout, err
+	case 2:
+		var input, output *os.File
+		var err error
+		input, err = createInput(args[0])
+		if err == nil {
+			output, err = createOutput(args[1])
+		}
+		return input, output, err
+	}
+	return nil, nil, fmt.Errorf("too many arguments: %v", args)
+}
+
+func createOutput(output string) (*os.File, error) {
+	if output == "-" {
+		return os.Stdout, nil
+	}
+	return os.OpenFile(output, os.O_CREATE|os.O_WRONLY, 0644)
+}
+
+func createInput(input string) (*os.File, error) {
+	if input == "-" {
+		return os.Stdin, nil
+	}
+	return os.Open(input)
+}
+
+/*
 Perform reads files from args.Input and writes result to args.Output.
 */
 func (args *Arguments) Perform() error {
@@ -61,15 +105,25 @@ func isPrint(uniqFlag bool, deleteLineFlag bool) bool {
 		uniqFlag && deleteLineFlag
 }
 
+func updateDatabase(line string, uniqFlag bool, entries []entry) []entry {
+	if uniqFlag {
+		for i, entry := range entries {
+			if entry.line == line {
+				entries[i].count[uniqFlag]++
+			}
+		}
+		return entries
+	}
+	var entry = entry{line: line, count: map[bool]int{uniqFlag: 1}}
+	return append(entries, entry)
+}
+
 func (args *Arguments) runUnique(scanner *bufio.Scanner, writer *bufio.Writer) error {
-	var results = []string{}
+	var entries = []entry{}
 	for scanner.Scan() {
 		var line = scanner.Text()
-		var uniqFlag, lineToDB = args.isUniqLine(line, results)
-		fmt.Printf("line: %s, uniq: %v, deletes: %v\n", line, uniqFlag, args.Options.DeleteLines)
-		if !uniqFlag {
-			results = append(results, lineToDB)
-		}
+		var uniqFlag, lineToDB = args.isUniqLine(line, entries)
+		entries = updateDatabase(lineToDB, uniqFlag, entries)
 		if isPrint(uniqFlag, args.Options.DeleteLines) {
 			writer.WriteString(line)
 			writer.WriteString("\n")
@@ -79,27 +133,27 @@ func (args *Arguments) runUnique(scanner *bufio.Scanner, writer *bufio.Writer) e
 	return nil
 }
 
-func (opts *Options) match(readLine, lineOfDB string) bool {
-	return readLine == lineOfDB
+func (opts *Options) match(readLine string, lineOfDB entry) bool {
+	return readLine == lineOfDB.line
 }
 
-func (opts *Options) isFoundLineInAdjacentDB(line string, list []string) bool {
+func (opts *Options) isFoundLineInAdjacentDB(line string, list []entry) bool {
 	if len(list) == 0 {
 		return false
 	}
 	return opts.match(line, list[len(list)-1])
 }
 
-func (opts *Options) isFoundLineInDB(line string, list []string) bool {
+func (opts *Options) isFoundLineInDB(line string, list []entry) bool {
 	for _, lineInList := range list {
-		if line == lineInList {
+		if line == lineInList.line {
 			return true
 		}
 	}
 	return false
 }
 
-func (args *Arguments) isUniqLine(line string, list []string) (flag bool, lineToDB string) {
+func (args *Arguments) isUniqLine(line string, list []entry) (flag bool, lineToDB string) {
 	lineToDB = line
 	if args.Options.IgnoreCase {
 		lineToDB = strings.ToLower(line)
