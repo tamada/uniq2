@@ -20,11 +20,11 @@ deps:
 setup: deps
 	git submodule update --init
 
-test: setup 
+test: setup
 	$(GO) test -covermode=count -coverprofile=coverage.out $$(go list ./... | grep -v vendor)
 
 build: setup
-	$(GO) build -o $(NAME) -v
+	cd cmd/uniq2; $(GO) build -o $(NAME) -v
 
 clean:
 	$(GO) clean
