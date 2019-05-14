@@ -106,13 +106,17 @@ func isPrint(uniqFlag bool, deleteLineFlag bool) bool {
 }
 
 func updateDatabase(line string, uniqFlag bool, entries []entry) []entry {
-	if uniqFlag {
-		for i, entry := range entries {
-			if entry.line == line {
-				entries[i].count[uniqFlag]++
-			}
+	for i, entry := range entries {
+		if entry.line == line {
+			entries[i].count[uniqFlag]++
 		}
-		return entries
+	}
+	return entries
+}
+
+func upsertDatabase(line string, uniqFlag bool, entries []entry) []entry {
+	if uniqFlag {
+		return updateDatabase(line, uniqFlag, entries)
 	}
 	var entry = entry{line: line, count: map[bool]int{uniqFlag: 1}}
 	return append(entries, entry)
@@ -123,7 +127,7 @@ func (args *Arguments) runUnique(scanner *bufio.Scanner, writer *bufio.Writer) e
 	for scanner.Scan() {
 		var line = scanner.Text()
 		var uniqFlag, lineToDB = args.isUniqLine(line, entries)
-		entries = updateDatabase(lineToDB, uniqFlag, entries)
+		entries = upsertDatabase(lineToDB, uniqFlag, entries)
 		if isPrint(uniqFlag, args.Options.DeleteLines) {
 			writer.WriteString(line)
 			writer.WriteString("\n")
