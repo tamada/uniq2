@@ -3,7 +3,7 @@
 [![codebeat badge](https://codebeat.co/badges/855266ea-99d4-4d80-ac43-81a1712f0f90)](https://codebeat.co/projects/github-com-tamada-uniq2-master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tamada/uniq2)](https://goreportcard.com/report/github.com/tamada/uniq2)
 [![License](https://img.shields.io/badge/License-WTFPL-blue.svg)](https://github.com/tamada/uniq2/blob/master/LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.1.0-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v0.1.0)
+[![Version](https://img.shields.io/badge/Version-1.0.0-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v1.0.0)
 
 # uniq2
 
@@ -17,10 +17,36 @@ We want to delete not continuous duplicated lines with remaining the order.
 
 ## Install
 
+### Install by Homebrew
+
+Simply type the following commands.
+
+```sh
+$ brew tap tamada/brew
+$ brew install uniq2
+```
+
+### Install by Go
+
 Simply type the following command.
 
 ```sh
 $ go get github.com/tamada/uniq2
+```
+
+## Usage
+
+```
+uniq2 [OPTIONS] [INPUT [OUTPUT]]
+OPTIONS
+    -a, --adjacent        delete only adjacent duplicated lines.
+    -d, --delete-lines    only prints deleted lines.
+    -i, --ignore-case     case sensitive.
+    -h, --help            print this message.
+
+INPUT                     gives file name of input.  If argument is single dash ('-')
+                          or absent, the program read strings from stdin.
+OUTPUT                    represents the destination.
 ```
 
 ## License

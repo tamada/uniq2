@@ -4,17 +4,16 @@ import (
 	"fmt"
 	"os"
 
+	flag "github.com/ogier/pflag"
 	"github.com/tamada/uniq2/lib"
-	"github.com/urfave/cli"
 )
 
-const VERSION = "0.2.0"
+const VERSION = "1.0.0"
 
-func printHelp(app *cli.App) {
-	fmt.Printf(`%s
+func printHelp(appName string) {
+	fmt.Printf(`%s [OPTIONS] [INPUT [OUTPUT]]
 OPTIONS
     -a, --adjacent        delete only adjacent duplicated lines.
-    -c, --show-counts     show counts of deleted lines.
     -d, --delete-lines    only prints deleted lines.
     -i, --ignore-case     case sensitive.
     -h, --help            print this message.
@@ -22,78 +21,41 @@ OPTIONS
 INPUT                     gives file name of input.  If argument is single dash ('-')
                           or absent, the program read strings from stdin.
 OUTPUT                    represents the destination.
-`, app.Usage)
+`, appName)
 }
 
-func buildFlags() []cli.Flag {
-	return []cli.Flag{
-		cli.BoolFlag{
-			Name:  "adjacent, a",
-			Usage: "delete only adjacent duplicated lines.",
-		},
-		cli.BoolFlag{
-			Name:  "show-counts, c",
-			Usage: "show counts of deleted lines.",
-		},
-		cli.BoolFlag{
-			Name:  "delete-lines, d",
-			Usage: "only prints deleted lines.",
-		},
-		cli.BoolFlag{
-			Name:  "ignore-case, i",
-			Usage: "case sensitive",
-		},
-	}
-}
-
-func constructApp() *cli.App {
-	var app = cli.NewApp()
-	app.Name = "uniq2"
-	app.Usage = "Eliminates duplicated lines"
-	app.UsageText = "uniq2 [OPTIONS] [INPUT [OUTPUT]]"
-	app.Version = VERSION
-	app.Flags = buildFlags()
-	app.Action = func(c *cli.Context) error {
-		return action(app, c)
-	}
-	return app
-}
-
-func parseOptions(c *cli.Context) *lib.Options {
-	return &lib.Options{
-		Adjacent:    c.Bool("adjacent"),
-		ShowCounts:  c.Bool("show-counts"),
-		DeleteLines: c.Bool("delete-lines"),
-		IgnoreCase:  c.Bool("ignore-case"),
-	}
-}
-
-func perform(args *lib.Arguments) error {
+func perform(flags *flag.FlagSet, opts *lib.Options) int {
+	var args, err = lib.NewArguments(opts, flags.Args()[1:])
 	defer args.Close()
-	return args.Perform()
-}
-
-func action(app *cli.App, c *cli.Context) error {
-	var options = parseOptions(c)
-	if c.Bool("help") {
-		printHelp(app)
-		return nil
+	if err == nil {
+		err = args.Perform()
 	}
-	var args, err = lib.NewArguments(options, c.Args())
-	if err != nil {
-		return err
-	}
-	return perform(args)
-}
-
-func goMain() int {
-	var app = constructApp()
-	var err = app.Run(os.Args)
 	if err != nil {
 		fmt.Println(err.Error())
 		return 1
 	}
 	return 0
+}
+
+func goMain() int {
+	var flags, opts = buildFlagSet()
+	var err = flags.Parse(os.Args)
+	if err == nil {
+		return perform(flags, opts)
+	}
+	fmt.Println(err.Error())
+
+	return 0
+}
+
+func buildFlagSet() (*flag.FlagSet, *lib.Options) {
+	var opts = lib.Options{}
+	var flags = flag.NewFlagSet("uniq2", flag.ContinueOnError)
+	flags.Usage = func() { printHelp("uniq2") }
+	flags.BoolVarP(&opts.Adjacent, "adjacent", "a", false, "delete only the adjacent duplicate lines")
+	flags.BoolVarP(&opts.DeleteLines, "delete-lines", "d", false, "only prints deleted lines")
+	flags.BoolVarP(&opts.IgnoreCase, "ignore-case", "i", false, "case sensitive")
+	return flags, &opts
 }
 
 func main() {
