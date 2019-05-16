@@ -1,6 +1,6 @@
 GO=go
 NAME := uniq2
-VERSION := 0.1.0
+VERSION := 0.2.0
 REVISION := $(shell git rev-parse --short HEAD)
 LDFLAGS := -X 'main.version=$(VERSION)'
 	-X 'main.revision=$(REVISION)'
@@ -17,8 +17,13 @@ deps:
 
 	dep ensure -vendor-only
 
-setup: deps
+setup: deps update_version
 	git submodule update --init
+
+update_version:
+	@sed 's/const VERSION = .*/const VERSION = "${VERSION}"/g' cmd/uniq2/main.go > a
+	@mv a cmd/uniq2/main.go
+	@echo "Replace version to \"${VERSION}\""
 
 test: setup
 	$(GO) test -covermode=count -coverprofile=coverage.out $$(go list ./... | grep -v vendor)
