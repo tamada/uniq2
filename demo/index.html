@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Hugo 0.54.0" />
+  <meta name="generator" content="Hugo 0.55.5" />
   <link rel="stylesheet" href="/uniq2/css/normalize.css">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   
@@ -21,7 +21,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
-  <title>Utilities | uniq2</title>
+  <title>Demo | uniq2</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
     uniq2
   </h1>
   <h2 class="project-tagline">
-    Eliminates duplicate lines
+    Deletes duplicate lines
   </h2>
   <nav>
     
@@ -45,7 +45,7 @@
       
       
       
-      <a href="/uniq2/utils/" class="btn">Utilities</a>
+      <a href="/uniq2/demo/" class="btn">Demo</a>
     
       
       
@@ -58,29 +58,48 @@
 
   <section class="main-content">
     
-  <h1>Utilities</h1>
+  <h1>Demo</h1>
   
 
 <h2 id="demo">Demo</h2>
-
-<pre><code>$ cat -n file
-line1
-line1
-line3
-line1
-$ uniq file
-line1
-line3
-line1
-$ uniq2 file
-line1
-line3
-</code></pre>
-
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ cat -n testdata/test1.txt
+<span style="color:#666">1</span>	a1
+<span style="color:#666">2</span>	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the previous line.</span>
+<span style="color:#666">3</span>	a2
+<span style="color:#666">4</span>	a2  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the previous line.</span>
+<span style="color:#666">5</span>	a3
+<span style="color:#666">6</span>	a4
+<span style="color:#666">7</span>	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the first line.</span>
+<span style="color:#666">8</span>	A1
+$ uniq testdata/test1.txt
+a1
+a2
+a3
+a4
+A1
+$ uniq -a testdata/test1.txt  <span style="color:#408080;font-style:italic"># same result as uniq command.</span>
+a1
+a2
+a3
+a4
+a1  <span style="color:#408080;font-style:italic"># &lt;- this line is not deleted.</span>
+A1
+$ uniq -i testdata/test1.txt <span style="color:#408080;font-style:italic"># ignore case</span>
+a1
+a2
+a3
+a4
+$ uniq -d testdata/test1.txt <span style="color:#408080;font-style:italic"># print delete lines.</span>
+a1
+a2
+a1</code></pre></div>
 <h2 id="delete-duplicate-entries-in-path">Delete duplicate entries in PATH</h2>
-
-<pre><code>export PATH=$(echo $PATH | tr : '\n' | uniq2 | paste -s -d : -)
-</code></pre>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#008000">export</span> <span style="color:#19177c">PATH</span><span style="color:#666">=</span><span style="color:#008000;font-weight:bold">$(</span><span style="color:#008000">echo</span> <span style="color:#19177c">$PATH</span> | tr : <span style="color:#ba2121">&#39;\n&#39;</span> | uniq2 | paste -s -d : -<span style="color:#008000;font-weight:bold">)</span></code></pre></div>
+<ul>
+<li><code>tr : '\n'</code> replaces <code>:</code> to <code>\n</code> of data from STDIN,</li>
+<li><code>uniq2</code> deletes duplicate lines from the result of <code>tr</code>, and</li>
+<li><code>paste -s -d : -</code> joins given strings with <code>:</code>.</li>
+</ul>
 
 
     <footer class="site-footer">

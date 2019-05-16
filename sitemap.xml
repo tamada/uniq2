@@ -12,12 +12,12 @@
   </url>
   
   <url>
-    <loc>https://tamada.github.io/uniq2/tags/</loc>
-    <priority>0</priority>
+    <loc>https://tamada.github.io/uniq2/demo/</loc>
   </url>
   
   <url>
-    <loc>https://tamada.github.io/uniq2/utils/</loc>
+    <loc>https://tamada.github.io/uniq2/tags/</loc>
+    <priority>0</priority>
   </url>
   
   <url>

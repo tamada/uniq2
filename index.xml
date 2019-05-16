@@ -22,12 +22,12 @@ Authors  Haruaki Tamada  </description>
     </item>
     
     <item>
-      <title>Utilities</title>
-      <link>https://tamada.github.io/uniq2/utils/</link>
+      <title>Demo</title>
+      <link>https://tamada.github.io/uniq2/demo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://tamada.github.io/uniq2/utils/</guid>
-      <description> Demo $ cat -n file line1 line1 line3 line1 $ uniq file line1 line3 line1 $ uniq2 file line1 line3  Delete duplicate entries in PATH export PATH=$(echo $PATH | tr : &#39;\n&#39; | uniq2 | paste -s -d : -)  </description>
+      <guid>https://tamada.github.io/uniq2/demo/</guid>
+      <description>Demo $ cat -n testdata/test1.txt 1	a1 2	a1 # &amp;lt;- is the duplicate of the previous line. 3	a2 4	a2 # &amp;lt;- is the duplicate of the previous line. 5	a3 6	a4 7	a1 # &amp;lt;- is the duplicate of the first line. 8	A1 $ uniq testdata/test1.txt a1 a2 a3 a4 A1 $ uniq -a testdata/test1.txt # same result as uniq command. a1 a2 a3 a4 a1 # &amp;lt;- this line is not deleted.</description>
     </item>
     
   </channel>
