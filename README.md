@@ -22,7 +22,7 @@ We want to delete not continuous duplicated lines with remaining the order.
 Simply type the following commands.
 
 ```sh
-$ brew tap tamada/brew
+$ brew tap tamada/brew # only the first time.
 $ brew install uniq2
 ```
 
@@ -36,7 +36,7 @@ $ go get github.com/tamada/uniq2
 
 ## Usage
 
-```
+```sh
 uniq2 [OPTIONS] [INPUT [OUTPUT]]
 OPTIONS
     -a, --adjacent        delete only adjacent duplicated lines.
