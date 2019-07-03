@@ -8,7 +8,7 @@ import (
 	"github.com/tamada/uniq2/lib"
 )
 
-const VERSION = "1.0.0"
+const VERSION = "1.0.1"
 
 func printHelp(appName string) {
 	fmt.Printf(`%s [OPTIONS] [INPUT [OUTPUT]]
