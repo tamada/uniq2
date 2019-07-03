@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Hugo 0.55.5" />
+  <meta name="generator" content="Hugo 0.55.6" />
   <link rel="stylesheet" href="/uniq2/css/normalize.css">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   
@@ -61,6 +61,17 @@
   <h1>Demo</h1>
   
 
+<h2 id="usage">Usage</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">uniq2 <span style="color:#666">[</span>OPTIONS<span style="color:#666">]</span> <span style="color:#666">[</span>INPUT <span style="color:#666">[</span>OUTPUT<span style="color:#666">]]</span>
+OPTIONS
+    -a, --adjacent        delete only adjacent duplicated lines.
+    -d, --delete-lines    only prints deleted lines.
+    -i, --ignore-case     <span style="color:#008000;font-weight:bold">case</span> sensitive.
+    -h, --help            print this message.
+
+INPUT                     gives file name of input.  If argument is single dash <span style="color:#666">(</span><span style="color:#ba2121">&#39;-&#39;</span><span style="color:#666">)</span>
+                          or absent, the program <span style="color:#008000">read</span> strings from stdin.
+OUTPUT                    represents the destination.</code></pre></div>
 <h2 id="demo">Demo</h2>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ cat -n testdata/test1.txt
 <span style="color:#666">1</span>	a1
@@ -71,25 +82,25 @@
 <span style="color:#666">6</span>	a4
 <span style="color:#666">7</span>	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the first line.</span>
 <span style="color:#666">8</span>	A1
-$ uniq testdata/test1.txt
+$ uniq2 testdata/test1.txt
 a1
 a2
 a3
 a4
 A1
-$ uniq -a testdata/test1.txt  <span style="color:#408080;font-style:italic"># same result as uniq command.</span>
+$ uniq2 -a testdata/test1.txt  <span style="color:#408080;font-style:italic"># same result as uniq command.</span>
 a1
 a2
 a3
 a4
 a1  <span style="color:#408080;font-style:italic"># &lt;- this line is not deleted.</span>
 A1
-$ uniq -i testdata/test1.txt <span style="color:#408080;font-style:italic"># ignore case</span>
+$ uniq2 -i testdata/test1.txt <span style="color:#408080;font-style:italic"># ignore case</span>
 a1
 a2
 a3
 a4
-$ uniq -d testdata/test1.txt <span style="color:#408080;font-style:italic"># print delete lines.</span>
+$ uniq2 -d testdata/test1.txt <span style="color:#408080;font-style:italic"># print delete lines.</span>
 a1
 a2
 a1</code></pre></div>

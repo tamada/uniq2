@@ -27,7 +27,7 @@ Authors  Haruaki Tamada  </description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://tamada.github.io/uniq2/demo/</guid>
-      <description>Demo $ cat -n testdata/test1.txt 1	a1 2	a1 # &amp;lt;- is the duplicate of the previous line. 3	a2 4	a2 # &amp;lt;- is the duplicate of the previous line. 5	a3 6	a4 7	a1 # &amp;lt;- is the duplicate of the first line. 8	A1 $ uniq testdata/test1.txt a1 a2 a3 a4 A1 $ uniq -a testdata/test1.txt # same result as uniq command. a1 a2 a3 a4 a1 # &amp;lt;- this line is not deleted.</description>
+      <description>Usage uniq2 [OPTIONS] [INPUT [OUTPUT]] OPTIONS -a, --adjacent delete only adjacent duplicated lines. -d, --delete-lines only prints deleted lines. -i, --ignore-case case sensitive. -h, --help print this message. INPUT gives file name of input. If argument is single dash (&amp;#39;-&amp;#39;) or absent, the program read strings from stdin. OUTPUT represents the destination. Demo $ cat -n testdata/test1.txt 1	a1 2	a1 # &amp;lt;- is the duplicate of the previous line.</description>
     </item>
     
   </channel>
