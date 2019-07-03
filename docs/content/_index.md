@@ -21,7 +21,7 @@ We want to delete not continuous duplicated lines with remaining the order.
 
 ## Install
 
-## Install by Homebrew
+### Install by Homebrew
 
 Simply type the following commands.
 
@@ -30,7 +30,7 @@ $ brew tap tamada/brew # <- only the first time
 $ brew install uniq2
 ```
 
-## Install by Go
+### Install by Go
 
 Simply type the following command.
 
