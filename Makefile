@@ -1,23 +1,13 @@
 GO=go
 NAME := uniq2
-VERSION := 1.0.0
+VERSION := 1.0.1
 REVISION := $(shell git rev-parse --short HEAD)
 LDFLAGS := -X 'main.version=$(VERSION)'
 	-X 'main.revision=$(REVISION)'
 
 all: test build
 
-deps:
-	$(GO) get golang.org/x/lint/golint
-	$(GO) get golang.org/x/tools/cmd/goimports
-	$(GO) get github.com/golang/dep/cmd/dep
-
-	$(GO) get golang.org/x/tools/cmd/cover
-	$(GO) get github.com/mattn/goveralls
-
-	dep ensure -vendor-only
-
-setup: deps update_version
+setup: update_version
 	git submodule update --init
 
 update_version:
@@ -36,4 +26,4 @@ build: setup
 
 clean:
 	$(GO) clean
-	rm -rf $(NAME)
+	rm -rf cmd/uniq2/$(NAME)
