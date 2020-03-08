@@ -1,6 +1,6 @@
 GO=go
 NAME := uniq2
-VERSION := 1.0.1
+VERSION := 1.0.2
 DIST := $(NAME)-$(VERSION)
 
 all: test build
