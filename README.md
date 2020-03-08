@@ -3,7 +3,7 @@
 [![codebeat badge](https://codebeat.co/badges/855266ea-99d4-4d80-ac43-81a1712f0f90)](https://codebeat.co/projects/github-com-tamada-uniq2-master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tamada/uniq2)](https://goreportcard.com/report/github.com/tamada/uniq2)
 [![License](https://img.shields.io/badge/License-WTFPL-blue.svg)](https://github.com/tamada/uniq2/blob/master/LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.2-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v1.0.2)
+[![Version](https://img.shields.io/badge/Version-1.0.3-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v1.0.3)
 
 # uniq2
 
@@ -48,6 +48,22 @@ INPUT                     gives file name of input.  If argument is single dash 
                           or absent, the program read strings from stdin.
 OUTPUT                    represents the destination.
 ```
+
+## :whale: Docker
+
+```sh
+docker run --rm -v $PWD:/home/uniq2 tamada/uniq2:1.0.3 [OPTIONS] [ARGUMENTS...]
+```
+
+The meaning of the options of above command are as follows.
+
+* `--rm`
+    * remove container after running Docker.
+* `-v $PWD:/home/uniq2`
+    * share volumen `$PWD` in the host OS to `/home/uniq2` in the container OS.
+    * Note that `$PWD` must be the absolute path.
+
+[![Docker](https://img.shields.io/badge/docker-tamada%2Funiq2%3Alatest-blue?logo=docker&style=social)](https://hub.docker.com/r/tamada/uniq2)
 
 ## License
 
