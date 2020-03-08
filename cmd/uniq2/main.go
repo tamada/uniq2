@@ -8,6 +8,9 @@ import (
 	"github.com/tamada/uniq2/lib"
 )
 
+/*
+VERSION shows version of uniq2.
+*/
 const VERSION = "1.0.3"
 
 func printHelp(appName string) {
