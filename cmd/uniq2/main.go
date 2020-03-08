@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	flag "github.com/ogier/pflag"
+	flag "github.com/spf13/pflag"
 	"github.com/tamada/uniq2/lib"
 )
 
-const VERSION = "1.0.1"
+const VERSION = "1.0.2"
 
 func printHelp(appName string) {
 	fmt.Printf(`%s [OPTIONS] [INPUT [OUTPUT]]

@@ -1,7 +1,6 @@
-vendor
 uniq2
 
-### https://raw.github.com/github/gitignore/5c5a1b536b6f9bf11515518f03d58addaf29f681/Go.gitignore
+### https://raw.github.com/github/gitignore/599646e9d0a26283d67715dead8f26e0eb2df753/Go.gitignore
 
 # Binaries for programs and plugins
 *.exe
@@ -20,7 +19,7 @@ uniq2
 # vendor/
 
 
-### https://raw.github.com/github/gitignore/5c5a1b536b6f9bf11515518f03d58addaf29f681/Global/Emacs.gitignore
+### https://raw.github.com/github/gitignore/599646e9d0a26283d67715dead8f26e0eb2df753/Global/Emacs.gitignore
 
 # -*- mode: gitignore; -*-
 *~
@@ -73,7 +72,7 @@ flycheck_*.el
 
 
 
-### https://raw.github.com/github/gitignore/5c5a1b536b6f9bf11515518f03d58addaf29f681/Global/macOS.gitignore
+### https://raw.github.com/github/gitignore/599646e9d0a26283d67715dead8f26e0eb2df753/Global/macOS.gitignore
 
 # General
 .DS_Store
