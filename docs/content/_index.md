@@ -7,7 +7,7 @@ title: uniq2
 [![codebeat badge](https://codebeat.co/badges/855266ea-99d4-4d80-ac43-81a1712f0f90)](https://codebeat.co/projects/github-com-tamada-uniq2-master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tamada/uniq2)](https://goreportcard.com/report/github.com/tamada/uniq2)
 [![License](https://img.shields.io/badge/License-WTFPL-blue.svg)](https://github.com/tamada/uniq2/blob/master/LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/badge/Version-1.0.1-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v1.0.1)
 
 ## Description
 
@@ -25,6 +25,17 @@ Simply type the following commands.
 
 ```sh
 $ brew tap tamada/brew
+$ brew install uniq2
+```
+
+### Install by Go
+
+### Install by Homebrew
+
+Simply type the following commands.
+
+```bash
+$ brew tap tamada/brew # <- only the first time
 $ brew install uniq2
 ```
 

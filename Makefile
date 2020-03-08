@@ -40,4 +40,4 @@ build: setup
 
 clean:
 	$(GO) clean
-	rm -rf $(NAME)
+	rm -rf cmd/uniq2/$(NAME)
