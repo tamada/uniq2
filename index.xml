@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>uniq2</title>
@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://tamada.github.io/uniq2/about/</guid>
-      <description> License Do What The F*ck You Want To Public License
+      <description>License Do What The F*ck You Want To Public License
 
 Authors  Haruaki Tamada  </description>
     </item>
@@ -27,7 +27,7 @@ Authors  Haruaki Tamada  </description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://tamada.github.io/uniq2/demo/</guid>
-      <description>Usage uniq2 [OPTIONS] [INPUT [OUTPUT]] OPTIONS -a, --adjacent delete only adjacent duplicated lines. -d, --delete-lines only prints deleted lines. -i, --ignore-case case sensitive. -h, --help print this message. INPUT gives file name of input. If argument is single dash (&amp;#39;-&amp;#39;) or absent, the program read strings from stdin. OUTPUT represents the destination. Demo $ cat -n testdata/test1.txt 1	a1 2	a1 # &amp;lt;- is the duplicate of the previous line.</description>
+      <description>Usage uniq2 [OPTIONS] [INPUT [OUTPUT]] OPTIONS -a, --adjacent delete only adjacent duplicated lines. -d, --delete-lines only prints deleted lines. -i, --ignore-case case sensitive. -h, --help print this message. INPUT gives file name of input. If argument is single dash (&amp;#39;-&amp;#39;) or absent, the program read strings from stdin. OUTPUT represents the destination. Demo $ cat -n testdata/test1.txt 1	a1 2	a1 # &amp;lt;- is the duplicate of the previous line. 3	a2 4	a2 # &amp;lt;- is the duplicate of the previous line.</description>
     </item>
     
   </channel>

@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.65.3" />
   <link rel="stylesheet" href="/uniq2/css/normalize.css">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   
   
   
-  <link rel="stylesheet" href="/uniq2/css/cayman.87415a4997c8d6c666624ff26c8812f27f42b4cf5dc18c45fc8dcb0cd7d6d2f5.css">
+  <link rel="stylesheet" href="/uniq2/css/cayman.ea0e967413f3851071cc8ace3621bc4205fe8fa79b2abe3d7bf94ff2841f0d47.css">
   
   
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -59,9 +59,7 @@
   <section class="main-content">
     
   <h1>Demo</h1>
-  
-
-<h2 id="usage">Usage</h2>
+  <h2 id="usage">Usage</h2>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">uniq2 <span style="color:#666">[</span>OPTIONS<span style="color:#666">]</span> <span style="color:#666">[</span>INPUT <span style="color:#666">[</span>OUTPUT<span style="color:#666">]]</span>
 OPTIONS
     -a, --adjacent        delete only adjacent duplicated lines.
@@ -71,17 +69,17 @@ OPTIONS
 
 INPUT                     gives file name of input.  If argument is single dash <span style="color:#666">(</span><span style="color:#ba2121">&#39;-&#39;</span><span style="color:#666">)</span>
                           or absent, the program <span style="color:#008000">read</span> strings from stdin.
-OUTPUT                    represents the destination.</code></pre></div>
-<h2 id="demo">Demo</h2>
+OUTPUT                    represents the destination.
+</code></pre></div><h2 id="demo">Demo</h2>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ cat -n testdata/test1.txt
-<span style="color:#666">1</span>	a1
-<span style="color:#666">2</span>	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the previous line.</span>
-<span style="color:#666">3</span>	a2
-<span style="color:#666">4</span>	a2  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the previous line.</span>
-<span style="color:#666">5</span>	a3
-<span style="color:#666">6</span>	a4
-<span style="color:#666">7</span>	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the first line.</span>
-<span style="color:#666">8</span>	A1
+1	a1
+2	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the previous line.</span>
+3	a2
+4	a2  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the previous line.</span>
+5	a3
+6	a4
+7	a1  <span style="color:#408080;font-style:italic"># &lt;- is the duplicate of the first line.</span>
+8	A1
 $ uniq2 testdata/test1.txt
 a1
 a2
@@ -103,10 +101,10 @@ a4
 $ uniq2 -d testdata/test1.txt <span style="color:#408080;font-style:italic"># print delete lines.</span>
 a1
 a2
-a1</code></pre></div>
-<h2 id="delete-duplicate-entries-in-path">Delete duplicate entries in PATH</h2>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#008000">export</span> <span style="color:#19177c">PATH</span><span style="color:#666">=</span><span style="color:#008000;font-weight:bold">$(</span><span style="color:#008000">echo</span> <span style="color:#19177c">$PATH</span> | tr : <span style="color:#ba2121">&#39;\n&#39;</span> | uniq2 | paste -s -d : -<span style="color:#008000;font-weight:bold">)</span></code></pre></div>
-<ul>
+a1
+</code></pre></div><h2 id="delete-duplicate-entries-in-path">Delete duplicate entries in PATH</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#008000">export</span> <span style="color:#19177c">PATH</span><span style="color:#666">=</span><span style="color:#008000;font-weight:bold">$(</span><span style="color:#008000">echo</span> <span style="color:#19177c">$PATH</span> | tr : <span style="color:#ba2121">&#39;\n&#39;</span> | uniq2 | paste -s -d : -<span style="color:#008000;font-weight:bold">)</span>
+</code></pre></div><ul>
 <li><code>tr : '\n'</code> replaces <code>:</code> to <code>\n</code> of data from STDIN,</li>
 <li><code>uniq2</code> deletes duplicate lines from the result of <code>tr</code>, and</li>
 <li><code>paste -s -d : -</code> joins given strings with <code>:</code>.</li>
@@ -115,7 +113,7 @@ a1</code></pre></div>
 
     <footer class="site-footer">
   <span class="site-footer-credits">
-    <a href="https://github.com/tamada/uniq2"><img src="https://img.shields.io/badge/GitHub-tamada/uniq2-blueviolet.svg?logo=github" alt="GitHub" /></a> Made with <a href="https://gohugo.io/">Hugo</a>. Theme by <a href="https://github.com/zwbetz-gh/cayman-hugo-theme">Cayman</a>. Deployed to <a href="https://pages.github.com/">GitHub Pages</a>.
+    <a href="https://github.com/tamada/uniq2"><img src="https://img.shields.io/badge/GitHub-tamada/uniq2-blueviolet.svg?logo=github" alt="GitHub"></a> Made with <a href="https://gohugo.io/">Hugo</a>. Theme by <a href="https://github.com/zwbetz-gh/cayman-hugo-theme">Cayman</a>. Deployed to <a href="https://pages.github.com/">GitHub Pages</a>.
   </span>
 </footer>
 

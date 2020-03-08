@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.65.3" />
   <link rel="stylesheet" href="/uniq2/css/normalize.css">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   
   
   
-  <link rel="stylesheet" href="/uniq2/css/cayman.87415a4997c8d6c666624ff26c8812f27f42b4cf5dc18c45fc8dcb0cd7d6d2f5.css">
+  <link rel="stylesheet" href="/uniq2/css/cayman.ea0e967413f3851071cc8ace3621bc4205fe8fa79b2abe3d7bf94ff2841f0d47.css">
   
   
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -60,49 +60,55 @@
     
   <h1>uniq2</h1>
 
-
-
-<p><a href="https://travis-ci.org/tamada/uniq2"><img src="https://travis-ci.org/tamada/uniq2.svg?branch=master" alt="Build Status" /></a>
-<a href="https://coveralls.io/github/tamada/uniq2?branch=master"><img src="https://coveralls.io/repos/github/tamada/uniq2/badge.svg?branch=master" alt="Coverage Status" /></a>
-<a href="https://codebeat.co/projects/github-com-tamada-uniq2-master"><img src="https://codebeat.co/badges/855266ea-99d4-4d80-ac43-81a1712f0f90" alt="codebeat badge" /></a>
-<a href="https://goreportcard.com/report/github.com/tamada/uniq2"><img src="https://goreportcard.com/badge/github.com/tamada/uniq2" alt="Go Report Card" /></a>
-<a href="https://github.com/tamada/uniq2/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-WTFPL-blue.svg" alt="License" /></a>
-<a href="https://github.com/tamada/uniq2/releases/tag/v1.0.1"><img src="https://img.shields.io/badge/Version-1.0.1-yellowgreen.svg" alt="Version" /></a></p>
-
+<p><a href="https://travis-ci.org/tamada/uniq2"><img src="https://travis-ci.org/tamada/uniq2.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/tamada/uniq2?branch=master"><img src="https://coveralls.io/repos/github/tamada/uniq2/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://codebeat.co/projects/github-com-tamada-uniq2-master"><img src="https://codebeat.co/badges/855266ea-99d4-4d80-ac43-81a1712f0f90" alt="codebeat badge"></a>
+<a href="https://goreportcard.com/report/github.com/tamada/uniq2"><img src="https://goreportcard.com/badge/github.com/tamada/uniq2" alt="Go Report Card"></a>
+<a href="https://github.com/tamada/uniq2/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-WTFPL-blue.svg" alt="License"></a>
+<a href="https://github.com/tamada/uniq2/releases/tag/v1.0.2"><img src="https://img.shields.io/badge/Version-1.0.2-yellowgreen.svg" alt="Version"></a></p>
 <h2 id="description">Description</h2>
-
 <p>Delete duplicated lines.</p>
-
 <p>GNU core utilities have <code>uniq</code> command for deleting duplicate lines.
 However, <code>uniq</code> command deletes only continuous duplicate lines.
 When deleting not continuous duplicate lines, we use <code>sort</code> command together, in that case, the order of the list was not kept.</p>
-
 <p>We want to delete not continuous duplicated lines with remaining the order.</p>
-
-<h2 id="install">Install</h2>
-
 <h3 id="install-by-homebrew">Install by Homebrew</h3>
-
+<p>Simply type the following commands.</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ brew tap tamada/brew
+$ brew install uniq2
+</code></pre></div><h3 id="install-by-go">Install by Go</h3>
+<h3 id="install-by-homebrew-1">Install by Homebrew</h3>
 <p>Simply type the following commands.</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew tap tamada/brew <span style="color:#408080;font-style:italic"># &lt;- only the first time</span>
-$ brew install uniq2</code></pre></div>
-<h3 id="install-by-go">Install by Go</h3>
-
+$ brew install uniq2
+</code></pre></div><h3 id="install-by-go-1">Install by Go</h3>
 <p>Simply type the following command.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ go get github.com/tamada/uniq2</code></pre></div>
-<h2 id="license">License</h2>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ go get github.com/tamada/uniq2
+</code></pre></div><h2 id="usage">Usage</h2>
+<pre><code>uniq2 [OPTIONS] [INPUT [OUTPUT]]
+OPTIONS
+    -a, --adjacent        delete only adjacent duplicated lines.
+    -d, --delete-lines    only prints deleted lines.
+    -i, --ignore-case     case sensitive.
+    -h, --help            print this message.
 
+INPUT                     gives file name of input.  If argument is single dash ('-')
+                          or absent, the program read strings from stdin.
+OUTPUT                    represents the destination.
+</code></pre><h2 id="license">License</h2>
 <p><a href="https://github.com/tamada/uniq2/blob/master/LICENSE">WTFPL</a></p>
 
 
 <ul>
 
+
 </ul>
+
 
 
     <footer class="site-footer">
   <span class="site-footer-credits">
-    <a href="https://github.com/tamada/uniq2"><img src="https://img.shields.io/badge/GitHub-tamada/uniq2-blueviolet.svg?logo=github" alt="GitHub" /></a> Made with <a href="https://gohugo.io/">Hugo</a>. Theme by <a href="https://github.com/zwbetz-gh/cayman-hugo-theme">Cayman</a>. Deployed to <a href="https://pages.github.com/">GitHub Pages</a>.
+    <a href="https://github.com/tamada/uniq2"><img src="https://img.shields.io/badge/GitHub-tamada/uniq2-blueviolet.svg?logo=github" alt="GitHub"></a> Made with <a href="https://gohugo.io/">Hugo</a>. Theme by <a href="https://github.com/zwbetz-gh/cayman-hugo-theme">Cayman</a>. Deployed to <a href="https://pages.github.com/">GitHub Pages</a>.
   </span>
 </footer>
 
