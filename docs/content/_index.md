@@ -2,7 +2,7 @@
 title: uniq2
 ---
 
-[![Build Status](https://travis-ci.org/tamada/uniq2.svg?branch=master)](https://travis-ci.org/tamada/uniq2)
+[![Build Status](https://github.com/tamada/uniq2/workflows/build/badge.svg?branch=master)](https://github.com/tamada/uniq2/actions?workflow=build)
 [![Coverage Status](https://coveralls.io/repos/github/tamada/uniq2/badge.svg?branch=master)](https://coveralls.io/github/tamada/uniq2?branch=master)
 [![codebeat badge](https://codebeat.co/badges/855266ea-99d4-4d80-ac43-81a1712f0f90)](https://codebeat.co/projects/github-com-tamada-uniq2-master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tamada/uniq2)](https://goreportcard.com/report/github.com/tamada/uniq2)
