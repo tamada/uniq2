@@ -1,23 +1,11 @@
 GO=go
 NAME := uniq2
-VERSION := 1.0.0
-REVISION := $(shell git rev-parse --short HEAD)
-LDFLAGS := -X 'main.version=$(VERSION)'
-	-X 'main.revision=$(REVISION)'
+VERSION := 1.0.1
+DIST := $(NAME)-$(VERSION)
 
 all: test build
 
-deps:
-	$(GO) get golang.org/x/lint/golint
-	$(GO) get golang.org/x/tools/cmd/goimports
-	$(GO) get github.com/golang/dep/cmd/dep
-
-	$(GO) get golang.org/x/tools/cmd/cover
-	$(GO) get github.com/mattn/goveralls
-
-	dep ensure -vendor-only
-
-setup: deps update_version
+setup: update_version
 	git submodule update --init
 
 update_version:
@@ -31,8 +19,24 @@ update_version:
 test: setup
 	$(GO) test -covermode=count -coverprofile=coverage.out $$(go list ./... | grep -v vendor)
 
+# refer from https://pod.hatenablog.com/entry/2017/06/13/150342
+define _createDist
+	mkdir -p dist/$(1)_$(2)/$(DIST)
+	GOOS=$1 GOARCH=$2 go build -o dist/$(1)_$(2)/$(DIST)/$(NAME)$(3) cmd/$(NAME)/main.go
+	cp -r README.md LICENSE dist/$(1)_$(2)/$(DIST)
+	tar cfz dist/$(DIST)_$(1)_$(2).tar.gz -C dist/$(1)_$(2) $(DIST)
+endef
+
+dist: build
+	@$(call _createDist,darwin,amd64,)
+	@$(call _createDist,darwin,386,)
+	@$(call _createDist,windows,amd64,.exe)
+	@$(call _createDist,windows,386,.exe)
+	@$(call _createDist,linux,amd64,)
+	@$(call _createDist,linux,386,)
+
 build: setup
-	cd cmd/uniq2; $(GO) build -o $(NAME) -v
+	$(GO) build -o $(NAME) -v cmd/$(NAME)/main.go
 
 clean:
 	$(GO) clean
