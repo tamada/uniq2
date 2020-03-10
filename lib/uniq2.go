@@ -32,18 +32,19 @@ type entry struct {
 	count map[bool]int
 }
 
+func closeImpl(value interface{}) {
+	var closer, ok = value.(io.Closer)
+	if ok {
+		closer.Close()
+	}
+}
+
 /*
 Close finalize the files of Arguments.
 */
 func (args *Arguments) Close() {
-	var inputFile, ok1 = args.Input.(*os.File)
-	if ok1 {
-		inputFile.Close()
-	}
-	var outputFile, ok2 = args.Output.(*os.File)
-	if ok2 {
-		outputFile.Close()
-	}
+	closeImpl(args.Input)
+	closeImpl(args.Output)
 }
 
 /*
@@ -105,7 +106,7 @@ func isPrint(uniqFlag bool, deleteLineFlag bool) bool {
 		uniqFlag && deleteLineFlag
 }
 
-func updateDatabase(line string, uniqFlag bool, entries []entry) []entry {
+func updateDatabase(line string, uniqFlag bool, entries []*entry) []*entry {
 	for i, entry := range entries {
 		if entry.line == line {
 			entries[i].count[uniqFlag]++
@@ -114,16 +115,16 @@ func updateDatabase(line string, uniqFlag bool, entries []entry) []entry {
 	return entries
 }
 
-func upsertDatabase(line string, uniqFlag bool, entries []entry) []entry {
+func upsertDatabase(line string, uniqFlag bool, entries []*entry) []*entry {
 	if uniqFlag {
 		return updateDatabase(line, uniqFlag, entries)
 	}
-	var entry = entry{line: line, count: map[bool]int{uniqFlag: 1}}
+	var entry = &entry{line: line, count: map[bool]int{uniqFlag: 1}}
 	return append(entries, entry)
 }
 
 func (args *Arguments) runUnique(scanner *bufio.Scanner, writer *bufio.Writer) error {
-	var entries = []entry{}
+	var entries = []*entry{}
 	for scanner.Scan() {
 		var line = scanner.Text()
 		var uniqFlag, lineToDB = args.isUniqLine(line, entries)
@@ -137,18 +138,18 @@ func (args *Arguments) runUnique(scanner *bufio.Scanner, writer *bufio.Writer) e
 	return nil
 }
 
-func (opts *Options) match(readLine string, lineOfDB entry) bool {
+func (opts *Options) match(readLine string, lineOfDB *entry) bool {
 	return readLine == lineOfDB.line
 }
 
-func (opts *Options) isFoundLineInAdjacentDB(line string, list []entry) bool {
+func (opts *Options) isFoundLineInAdjacentDB(line string, list []*entry) bool {
 	if len(list) == 0 {
 		return false
 	}
 	return opts.match(line, list[len(list)-1])
 }
 
-func (opts *Options) isFoundLineInDB(line string, list []entry) bool {
+func (opts *Options) isFoundLineInDB(line string, list []*entry) bool {
 	for _, lineInList := range list {
 		if line == lineInList.line {
 			return true
@@ -157,7 +158,7 @@ func (opts *Options) isFoundLineInDB(line string, list []entry) bool {
 	return false
 }
 
-func (args *Arguments) isUniqLine(line string, list []entry) (flag bool, lineToDB string) {
+func (args *Arguments) isUniqLine(line string, list []*entry) (flag bool, lineToDB string) {
 	lineToDB = line
 	if args.Options.IgnoreCase {
 		lineToDB = strings.ToLower(line)
