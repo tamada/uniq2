@@ -28,8 +28,9 @@ type Arguments struct {
 }
 
 type entry struct {
-	line  string
-	count map[bool]int
+	line            string
+	duplicatedCount int
+	uniqCount       int
 }
 
 func closeImpl(value interface{}) {
@@ -106,10 +107,18 @@ func isPrint(uniqFlag bool, deleteLineFlag bool) bool {
 		uniqFlag && deleteLineFlag
 }
 
+func (e *entry) increment(flag bool) {
+	if flag {
+		e.uniqCount++
+	} else {
+		e.duplicatedCount++
+	}
+}
+
 func updateDatabase(line string, uniqFlag bool, entries []*entry) []*entry {
 	for i, entry := range entries {
 		if entry.line == line {
-			entries[i].count[uniqFlag]++
+			entries[i].increment(uniqFlag)
 		}
 	}
 	return entries
@@ -119,7 +128,8 @@ func upsertDatabase(line string, uniqFlag bool, entries []*entry) []*entry {
 	if uniqFlag {
 		return updateDatabase(line, uniqFlag, entries)
 	}
-	var entry = &entry{line: line, count: map[bool]int{uniqFlag: 1}}
+	var entry = &entry{line: line}
+	entry.increment(uniqFlag)
 	return append(entries, entry)
 }
 
