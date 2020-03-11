@@ -1,6 +1,43 @@
 package uniq2
 
-import "testing"
+import (
+	"bytes"
+	"os"
+	"strings"
+	"testing"
+)
+
+func TestNewArguments(t *testing.T) {
+	testdata := []struct {
+		args     []string
+		isError  bool
+		isStdin  bool
+		isStdout bool
+	}{
+		{[]string{}, false, true, true},
+		{[]string{"-"}, false, true, true},
+		{[]string{"-", "-"}, false, true, true},
+		{[]string{"uniq2.go"}, false, false, true},
+		{[]string{"uniq2.go", "-"}, false, false, true},
+		{[]string{"uniq2.go", "hoge"}, false, false, false},
+		{[]string{"uniq2.go", "hoge", "error"}, true, false, false},
+	}
+	for _, td := range testdata {
+		args, err := NewArguments(td.args)
+		if (err != nil) != td.isError {
+			t.Errorf("error of NewArguments(%v) did not match, wont %v", td.args, td.isError)
+		}
+		if err == nil {
+			if td.isStdin && args.input != os.Stdin {
+				t.Errorf("NewArguments(%v).input did not stdin", td.args)
+			}
+			if td.isStdout && args.output != os.Stdout {
+				t.Errorf("NewArguments(%v).output did not stdout", td.args)
+			}
+		}
+	}
+	defer os.Remove("hoge")
+}
 
 func TestParametersString(t *testing.T) {
 	testdata := []struct {
@@ -58,6 +95,49 @@ func TestUniq2BuildUniqer(t *testing.T) {
 		}
 		if wholeLineFlag != td.wholeUniqer {
 			t.Errorf("type error InverseUniqer by buildUniqer({ %s })", td.params.String())
+		}
+	}
+}
+
+func TestFilter(t *testing.T) {
+	testdata := []struct {
+		params     *Parameters
+		giveString string
+		wontString string
+	}{
+		{&Parameters{IgnoreCase: true}, "Hello World", "hello world"},
+		{&Parameters{}, "Hello World", "Hello World"},
+		{&Parameters{ShowCounts: true, IgnoreCase: true}, "Hello World", "hello world"},
+	}
+	for _, td := range testdata {
+		uniqer, _ := td.params.BuildUniqer().(*BasicFilterUniqer)
+		gotString := uniqer.Filter(td.giveString)
+		if gotString != td.wontString {
+			t.Errorf("{%s}.Filter(%s) did not match, wont %s, got %s", td.params.String(), td.giveString, td.wontString, gotString)
+		}
+	}
+}
+
+func TestStreamLine(t *testing.T) {
+	testdata := []struct {
+		params     *Parameters
+		giveString string
+		wontString string
+	}{
+		{&Parameters{IgnoreCase: true}, "a1\na1\na2\na3\nA1\na1", "a1-a2-a3"},
+		{&Parameters{}, "a1\na1\na2\na3\nA1\na1", "a1-a2-a3-A1"},
+		{&Parameters{Adjacent: true, IgnoreCase: true}, "a1\na1\na2\na3\nA1\na1", "a1-a2-a3-A1"},
+		{&Parameters{Adjacent: true}, "a1\na1\na2\na3\nA1\na1", "a1-a2-a3-A1-a1"},
+	}
+	for _, td := range testdata {
+		uniqer, _ := td.params.BuildUniqer().(*BasicFilterUniqer)
+		writer := &bytes.Buffer{}
+		args := &Arguments{input: strings.NewReader(td.giveString), output: writer}
+		defer args.Close()
+		args.performImpl(uniqer)
+		gotString := strings.Join(strings.Split(writer.String(), "\n"), "-")
+		if td.wontString != gotString {
+
 		}
 	}
 }

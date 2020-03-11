@@ -12,8 +12,8 @@ import (
 Arguments shows data source and destination.
 */
 type Arguments struct {
-	input  io.ReadCloser
-	output io.WriteCloser
+	input  io.Reader
+	output io.Writer
 }
 
 /*
@@ -31,8 +31,15 @@ func NewArguments(args []string) (*Arguments, error) {
 Close closes data source and destination.
 */
 func (args *Arguments) Close() {
-	args.input.Close()
-	args.output.Close()
+	closeImpl(args.input)
+	closeImpl(args.output)
+}
+
+func closeImpl(stream interface{}) {
+	closer, ok := stream.(io.Closer)
+	if ok {
+		closer.Close()
+	}
 }
 
 /*
