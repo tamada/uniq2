@@ -5,7 +5,7 @@ import (
 	"os"
 
 	flag "github.com/spf13/pflag"
-	"github.com/tamada/uniq2/lib"
+	"github.com/tamada/uniq2"
 )
 
 /*
@@ -19,6 +19,7 @@ OPTIONS
     -a, --adjacent        delete only adjacent duplicated lines.
     -d, --delete-lines    only prints deleted lines.
     -i, --ignore-case     case sensitive.
+	-s, --show-counts     show counts.
     -h, --help            print this message.
 
 INPUT                     gives file name of input.  If argument is single dash ('-')
@@ -27,20 +28,27 @@ OUTPUT                    represents the destination.
 `, appName)
 }
 
-func perform(flags *flag.FlagSet, opts *lib.Options) int {
-	var args, err = lib.NewArguments(opts, flags.Args()[1:])
-	defer args.Close()
+func printError(err error, statusCode int) int {
 	if err == nil {
-		err = args.Perform()
+		return 0
 	}
+	fmt.Println(err.Error())
+	return statusCode
+}
+
+func perform(flags *flag.FlagSet, opts *uniq2.Parameters) int {
+	var args, err = uniq2.NewArguments(flags.Args()[1:])
 	if err != nil {
-		fmt.Println(err.Error())
-		return 1
+		return printError(err, 1)
 	}
-	return 0
+	defer args.Close()
+	err = args.Perform(opts)
+	return printError(err, 2)
 }
 
 func goMain() int {
+	// defer profile.Start(profile.ProfilePath(".")).Stop()
+
 	var flags, opts = buildFlagSet()
 	var err = flags.Parse(os.Args)
 	if err == nil {
@@ -51,8 +59,8 @@ func goMain() int {
 	return 0
 }
 
-func buildFlagSet() (*flag.FlagSet, *lib.Options) {
-	var opts = lib.Options{}
+func buildFlagSet() (*flag.FlagSet, *uniq2.Parameters) {
+	var opts = uniq2.Parameters{}
 	var flags = flag.NewFlagSet("uniq2", flag.ContinueOnError)
 	flags.Usage = func() { printHelp("uniq2") }
 	flags.BoolVarP(&opts.Adjacent, "adjacent", "a", false, "delete only the adjacent duplicate lines")
@@ -62,7 +70,6 @@ func buildFlagSet() (*flag.FlagSet, *lib.Options) {
 }
 
 func main() {
-	// separates main function in order to run defers before exit.
 	var exitStatus = goMain()
 	os.Exit(exitStatus)
 }
