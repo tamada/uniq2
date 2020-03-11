@@ -11,10 +11,11 @@ import (
 /*
 VERSION shows version of uniq2.
 */
-const VERSION = "1.1.0"
+const VERSION = "1.1.1"
 
 func helpMessage(appName string) string {
-	return fmt.Sprintf(`%s [OPTIONS] [INPUT [OUTPUT]]
+	return fmt.Sprintf(`%s version %s
+%s [OPTIONS] [INPUT [OUTPUT]]
 OPTIONS
     -a, --adjacent        delete only adjacent duplicated lines.
     -d, --delete-lines    only prints deleted lines.
@@ -23,7 +24,7 @@ OPTIONS
 
 INPUT                     gives file name of input.  If argument is single dash ('-')
                           or absent, the program read strings from stdin.
-OUTPUT                    represents the destination.`, appName)
+OUTPUT                    represents the destination.`, appName, VERSION, appName)
 }
 
 func printError(err error, statusCode int) int {

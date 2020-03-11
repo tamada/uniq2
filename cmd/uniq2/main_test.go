@@ -12,6 +12,7 @@ func Example_uniq2() {
 func Example_printHelp() {
 	goMain([]string{"uniq2", "--help"})
 	// Output:
+	// uniq2 version 1.1.1
 	// uniq2 [OPTIONS] [INPUT [OUTPUT]]
 	// OPTIONS
 	//     -a, --adjacent        delete only adjacent duplicated lines.
