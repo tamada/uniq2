@@ -1,5 +1,5 @@
 FROM alpine:3.10.1
-ARG version="1.0.3"
+ARG version="1.1.0"
 LABEL maintainer="Haruai Tamada" \
       uniq2-version="1.0.2" \
       description="Deleting duplicate lines"

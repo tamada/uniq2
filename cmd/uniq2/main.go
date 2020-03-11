@@ -11,7 +11,7 @@ import (
 /*
 VERSION shows version of uniq2.
 */
-const VERSION = "1.0.3"
+const VERSION = "1.1.0"
 
 func helpMessage(appName string) string {
 	return fmt.Sprintf(`%s [OPTIONS] [INPUT [OUTPUT]]
