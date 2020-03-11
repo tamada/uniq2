@@ -1,7 +1,7 @@
 FROM alpine:3.10.1
-ARG version="1.1.0"
+ARG version="1.1.1"
 LABEL maintainer="Haruai Tamada" \
-      uniq2-version="1.0.2" \
+      uniq2-version=${version} \
       description="Deleting duplicate lines"
 
 RUN    adduser -D uniq2 \
