@@ -23,17 +23,6 @@ We want to delete not continuous duplicated lines with remaining the order.
 
 Simply type the following commands.
 
-```sh
-$ brew tap tamada/brew
-$ brew install uniq2
-```
-
-### Install by Go
-
-### Install by Homebrew
-
-Simply type the following commands.
-
 ```bash
 $ brew tap tamada/brew # <- only the first time
 $ brew install uniq2
