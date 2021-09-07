@@ -1,0 +1,57 @@
+use std::fs::{File, OpenOptions};
+use std::io::{self, BufRead, BufReader, BufWriter, Write};
+use std::path::Path;
+
+fn open_input_file(file_name: &str) -> Result<Box<dyn BufRead>, String> {
+    if file_name.trim() == "-" {
+        return open_stdin();
+    }
+    let input_path = Path::new(file_name);
+    if !input_path.exists() {
+        return Err(format!("{}: file not found", &input_path.display()));
+    }
+    match File::open(&input_path) {
+        Ok(file) => Ok(Box::new(BufReader::new(file))),
+        Err(e) => Err(format!("{}: {}", input_path.display(), e.to_string())),
+    }
+}
+
+fn open_stdin() -> Result<Box<dyn BufRead>, String> {
+    Ok(Box::new(BufReader::new(io::stdin())))
+}
+
+fn open_input(input: Option<String>) -> Result<Box<dyn BufRead>, String> {
+    return if let Some(input) = input {
+        open_input_file(&input)
+    } else {
+        open_stdin()
+    };
+}
+
+fn open_output_file(output: &str) -> Result<Box<dyn Write>, String> {
+    match OpenOptions::new().write(true).create(true).open(output) {
+        Ok(file) => Ok(Box::new(BufWriter::new(file))),
+        Err(e) => Err(format!("{}: {}", output, e.to_string())),
+    }
+}
+
+fn open_stdout() -> Result<Box<dyn Write>, String> {
+    Ok(Box::new(BufWriter::new(io::stdout())))
+}
+
+fn open_output(output: Option<String>) -> Result<Box<dyn Write>, String> {
+    if let Some(output) = output {
+        open_output_file(&output)
+    } else {
+        open_stdout()
+    }
+}
+
+pub fn open(
+    input: Option<String>,
+    output: Option<String>,
+) -> Result<(Box<dyn BufRead>, Box<dyn Write>), String> {
+    let input = open_input(input)?;
+    let output = open_output(output)?;
+    Ok((input, output))
+}
