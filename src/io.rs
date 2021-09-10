@@ -57,7 +57,10 @@ pub fn open(
 }
 
 mod tests {
-    use super::open_input;
+    use super::*;
+    use std::fs;
+    use std::fs::Permissions;
+    use std::os::unix::fs::PermissionsExt;
 
     #[test]
     fn test_input_with_none() {
@@ -81,5 +84,38 @@ mod tests {
     fn test_input_with_no_exist_file() {
         let input = open_input(Some("testdata/not_exist_file.txt".to_string()));
         assert!(input.is_err());
+    }
+
+    #[test]
+    fn test_input_with_no_read_write() {
+        let no_read_permission = Permissions::from_mode(0);
+        let _ = fs::set_permissions("testdata/no_read_write.txt", no_read_permission);
+        let input = open_input(Some("testdata/no_read_write.txt".to_string()));
+        assert!(input.is_err());
+        let default_permission = Permissions::from_mode(0o644);
+        let _ = fs::set_permissions("testdata/no_read_write.txt", default_permission);
+    }
+
+    #[test]
+    fn test_output_with_no_read_write() {
+        let no_read_permission = Permissions::from_mode(0);
+        let _ = fs::set_permissions("testdata/no_read_write.txt", no_read_permission);
+        let output = open_output(Some("testdata/no_read_write.txt".to_string()));
+        assert!(output.is_err());
+        let default_permission = Permissions::from_mode(0o644);
+        let _ = fs::set_permissions("testdata/no_read_write.txt", default_permission);
+    }
+
+    #[test]
+    fn test_output_with_not_exist_file() {
+        let output = open_output(Some("testdata/not_exist_file.txt".to_string()));
+        assert!(output.is_ok());
+        let _ = fs::remove_file("testdata/not_exist_file.txt");
+    }
+
+    #[test]
+    fn test_output_stdin() {
+        let output = open_output(None);
+        assert!(output.is_ok());
     }
 }
