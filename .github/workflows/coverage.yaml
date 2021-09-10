@@ -1,0 +1,23 @@
+name: Coverage
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: xd009642/tarpaulin
+      volumes:
+        - $GITHUB_WORKSPACE:/volume
+      options: --security-opt seccomp=unconfined
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Run tests
+        run: cargo tarpaulin -v -out xml
+      - name: show current status
+        run: |
+          ls
+      - name: Upload coverage
+        uses: coverallsapp/github-action@v1.0.1
+        with:
+          github-token: ${{ secrets.github_token }}
+          path-to-lcov: coverage.lcov
