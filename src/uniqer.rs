@@ -100,3 +100,74 @@ impl Uniqer for PlainUniqer {
         return Some(line);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_plain_uniqer() {
+        let mut uniqer = PlainUniqer {
+            lines: vec![
+                "line1".to_string(),
+                "line2".to_string(),
+                "line3".to_string(),
+            ],
+        };
+        assert!(uniqer.next("line0".to_string()).is_some());
+        assert!(uniqer.next("line1".to_string()).is_none());
+        assert!(uniqer.next("line2".to_string()).is_none());
+        assert!(uniqer.next("line3".to_string()).is_none());
+    }
+
+    #[test]
+    fn test_adjacent_uniqer() {
+        let mut uniqer = AdjacentUniqer {
+            prev: String::new(),
+        };
+        assert!(uniqer.next("hogehoge".to_string()).is_some());
+        assert!(uniqer.next("hogehoge".to_string()).is_none());
+        assert!(uniqer.next("previous".to_string()).is_some());
+        assert!(uniqer.next("previous".to_string()).is_none());
+    }
+
+    #[test]
+    fn test_default_uniqer_with_adjacent_and_ignore_case() {
+        let mut uniqer = construct_uniqer(true, false, true);
+        assert!(uniqer.next("hogehoge".to_string()).is_some());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_none());
+        assert!(uniqer.next("previous".to_string()).is_some());
+        assert!(uniqer.next("previous".to_string()).is_none());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+    }
+
+    #[test]
+    fn test_default_uniqer_with_none_adjacent_and_ignore_case() {
+        let mut uniqer = construct_uniqer(false, false, true);
+        assert!(uniqer.next("hogehoge".to_string()).is_some());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_none());
+        assert!(uniqer.next("previous".to_string()).is_some());
+        assert!(uniqer.next("previous".to_string()).is_none());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_none());
+    }
+
+    #[test]
+    fn test_default_uniqer_with_adjacent_and_ignore_case_delete() {
+        let mut uniqer = construct_uniqer(true, true, true);
+        assert!(uniqer.next("hogehoge".to_string()).is_none());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+        assert!(uniqer.next("previous".to_string()).is_none());
+        assert!(uniqer.next("previous".to_string()).is_some());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_none());
+    }
+
+    #[test]
+    fn test_default_uniqer_with_none_adjacent_and_ignore_case_delete() {
+        let mut uniqer = construct_uniqer(false, true, true);
+        assert!(uniqer.next("hogehoge".to_string()).is_none());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+        assert!(uniqer.next("previous".to_string()).is_none());
+        assert!(uniqer.next("previous".to_string()).is_some());
+        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+    }
+}

@@ -55,3 +55,25 @@ pub fn open(
     let output = open_output(output)?;
     Ok((input, output))
 }
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_input_with_none() {
+        let input = open_input(None);
+        assert!(input.is_ok());
+    }
+
+    #[test]
+    fn test_input_with_minus() {
+        let input = open_input(Some("-".to_string()));
+        assert!(input.is_ok());
+    }
+
+    #[test]
+    fn test_input_with_file() {
+        let input = open_input(Some("testdata/test1.txt".to_string()));
+        assert!(input.is_ok());
+    }
+}
