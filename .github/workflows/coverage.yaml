@@ -13,9 +13,10 @@ jobs:
         run: cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Lcov
       - name: show current status
         run: |
-          ls
+          ls -F
+          cat lcov.info
       - name: Upload coverage
         uses: coverallsapp/github-action@v1.0.1
         with:
           github-token: ${{ secrets.github_token }}
-          path-to-lcov: coverage.lcov
+          path-to-lcov: lcov.info
