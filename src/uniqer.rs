@@ -153,21 +153,21 @@ mod tests {
 
     #[test]
     fn test_default_uniqer_with_adjacent_and_ignore_case_delete() {
-        let mut uniqer = construct_uniqer(true, true, true);
+        let mut uniqer = construct_uniqer(true, true, false);
         assert!(uniqer.next("hogehoge".to_string()).is_none());
-        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+        assert!(uniqer.next("hogehoge".to_string()).is_some());
         assert!(uniqer.next("previous".to_string()).is_none());
         assert!(uniqer.next("previous".to_string()).is_some());
-        assert!(uniqer.next("HOGEhoge".to_string()).is_none());
+        assert!(uniqer.next("hogehoge".to_string()).is_none());
     }
 
     #[test]
     fn test_default_uniqer_with_none_adjacent_and_ignore_case_delete() {
-        let mut uniqer = construct_uniqer(false, true, true);
+        let mut uniqer = construct_uniqer(false, true, false);
         assert!(uniqer.next("hogehoge".to_string()).is_none());
-        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+        assert!(uniqer.next("hogehoge".to_string()).is_some());
         assert!(uniqer.next("previous".to_string()).is_none());
         assert!(uniqer.next("previous".to_string()).is_some());
-        assert!(uniqer.next("HOGEhoge".to_string()).is_some());
+        assert!(uniqer.next("hogehoge".to_string()).is_some());
     }
 }

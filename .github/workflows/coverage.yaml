@@ -11,10 +11,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Run tests
         run: cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --out Lcov
-      - name: show current status
-        run: |
-          ls -F
-          cat lcov.info
+      #      - name: show current status
+      #        run: |
+      #          ls -F
       - name: Upload coverage
         uses: coverallsapp/github-action@v1.0.1
         with:

@@ -4,6 +4,7 @@ mod cli;
 mod io;
 mod uniqer;
 
+#[cfg(not(tarpaulin_include))]
 fn main() {
     let opts = cli::Opts::parse();
 

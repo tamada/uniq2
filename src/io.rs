@@ -57,7 +57,7 @@ pub fn open(
 }
 
 mod tests {
-    use super::*;
+    use super::open_input;
 
     #[test]
     fn test_input_with_none() {
@@ -75,5 +75,11 @@ mod tests {
     fn test_input_with_file() {
         let input = open_input(Some("testdata/test1.txt".to_string()));
         assert!(input.is_ok());
+    }
+
+    #[test]
+    fn test_input_with_no_exist_file() {
+        let input = open_input(Some("testdata/not_exist_file.txt".to_string()));
+        assert!(input.is_err());
     }
 }
