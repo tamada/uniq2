@@ -170,4 +170,20 @@ mod tests {
         assert!(uniqer.next("previous".to_string()).is_some());
         assert!(uniqer.next("hogehoge".to_string()).is_some());
     }
+
+    use std::fs::File;
+    use std::io::BufReader;
+    use std::vec::Vec;
+
+    #[test]
+    fn test_filter() {
+        let dest: Vec<u8> = vec![];
+        let mut uniqer = construct_uniqer(false, false, false);
+        let input = BufReader::new(File::open("testdata/test1.txt").unwrap());
+        let mut input_box: Box<dyn BufRead> = Box::new(input);
+        let mut output_box: Box<dyn Write> = Box::new(dest);
+        // uniqer.filter(&mut input_box, &mut output_box);
+        // How do I get the result from  written to the memory??
+        // String::from_utf8(dest).unwrap();
+    }
 }

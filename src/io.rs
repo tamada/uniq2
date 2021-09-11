@@ -1,5 +1,5 @@
 use std::fs::{File, OpenOptions};
-use std::io::{self, BufRead, BufReader, BufWriter, Write};
+use std::io::{stdin, stdout, BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
 
 fn open_input_file(file_name: &str) -> Result<Box<dyn BufRead>, String> {
@@ -17,7 +17,7 @@ fn open_input_file(file_name: &str) -> Result<Box<dyn BufRead>, String> {
 }
 
 fn open_stdin() -> Result<Box<dyn BufRead>, String> {
-    Ok(Box::new(BufReader::new(io::stdin())))
+    return Ok(Box::new(BufReader::new(stdin())));
 }
 
 fn open_input(input: Option<String>) -> Result<Box<dyn BufRead>, String> {
@@ -36,7 +36,7 @@ fn open_output_file(output: &str) -> Result<Box<dyn Write>, String> {
 }
 
 fn open_stdout() -> Result<Box<dyn Write>, String> {
-    Ok(Box::new(BufWriter::new(io::stdout())))
+    Ok(Box::new(BufWriter::new(stdout())))
 }
 
 fn open_output(output: Option<String>) -> Result<Box<dyn Write>, String> {
@@ -58,7 +58,6 @@ pub fn open(
 
 mod tests {
     use super::*;
-    use std::fs;
 
     #[test]
     fn test_input_with_none() {
@@ -88,7 +87,7 @@ mod tests {
     fn test_output_with_not_exist_file() {
         let output = open_output(Some("testdata/not_exist_file.txt".to_string()));
         assert!(output.is_ok());
-        let _ = fs::remove_file("testdata/not_exist_file.txt");
+        let _ = std::fs::remove_file("testdata/not_exist_file.txt");
     }
 
     #[test]
