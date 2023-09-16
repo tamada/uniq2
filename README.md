@@ -45,7 +45,7 @@ uniq2 [OPTIONS] [INPUT [OUTPUT]]
 OPTIONS
     -a, --adjacent        delete only adjacent duplicated lines.
     -d, --delete-lines    only prints deleted lines.
-    -i, --ignore-case     case sensitive.
+    -i, --ignore-case     case insensitive.
     -h, --help            print this message.
 
 INPUT                     gives file name of input.  If argument is single dash ('-')
