@@ -5,6 +5,10 @@
 [![License](https://img.shields.io/badge/License-WTFPL-blue.svg)](https://github.com/tamada/uniq2/blob/master/LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.1.1-yellowgreen.svg)](https://github.com/tamada/uniq2/releases/tag/v1.1.1)
 
+> **Note**
+> This repository is archived, and no more maintained, since the product of this repository is transfered into [tamada/peripherals](https://github.com/tamada/peripherals).
+> Please check it out.
+
 # uniq2
 
 Delete duplicated lines.
